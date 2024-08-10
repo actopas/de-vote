@@ -9,13 +9,16 @@ contract Vote {
     // }
     // Candidate[] public candidatesList;
     mapping(uint => uint) public candidatesList;
+    mapping(address => bool) private hasVoted;
     uint[] public keys;
+    string public constant VOTE_ALREADY_VOTED = "1";
     function vote(uint _id) external {
-        // 首先检查list中是否存在该id
+        require(!hasVoted[msg.sender], VOTE_ALREADY_VOTED);
         if (candidatesList[_id] == 0 && !containsKey(_id)) {
             keys.push(_id);
         }
-        candidatesList[_id] += 1; // 为指定候选人增加一票
+        candidatesList[_id] += 1;
+        hasVoted[msg.sender] = true;
     }
     function getVoteList()
         external
@@ -28,7 +31,6 @@ contract Vote {
         }
         return (keys, values);
     }
-    // 检查数组中是否包含某个ID
     function containsKey(uint _id) internal view returns (bool) {
         for (uint i = 0; i < keys.length; i++) {
             if (keys[i] == _id) {

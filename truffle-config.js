@@ -96,9 +96,14 @@ module.exports = {
     //   network_id: 2111,   // This network is yours, in the cloud.
     //   production: true    // Treats this network as if it was a public net. (default: false)
     // }
-    development: {
+    developmentCLI: {
       host: "127.0.0.1", // Localhost (默认)
       port: 8545, // Ganache 默认端口
+      network_id: "*", // 匹配任何网络 id
+    },
+    developmentGUI: {
+      host: "127.0.0.1", // Localhost (默认)
+      port: 7545, // Ganache 默认端口
       network_id: "*", // 匹配任何网络 id
     },
   },
